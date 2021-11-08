@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:circularflow_radiusInDP="100dp">
 
     <androidx.cardview.widget.CardView
@@ -26,20 +26,23 @@
             <TextView
                 android:id="@+id/textViewTaskTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/alike_angular"
                 android:text="Study"
                 android:textColor="#222121"
                 android:textSize="24sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="80dp" />
+                app:layout_constraintBottom_toTopOf="@+id/textViewCreationDate"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxState"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewCreationDate"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginStart="76dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/averia_gruesa_libre"
                 android:text="10-2-2021"
@@ -53,12 +56,12 @@
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/alike_angular"
-                android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-                android:textSize="16sp"
+                android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here,"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCreationDate" />
 
             <ImageView
                 android:id="@+id/imageViewUpdate"
@@ -104,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/averia_gruesa_libre"
                 android:text="20-2-2021"
                 android:textSize="14sp"
@@ -122,6 +125,8 @@
                 android:textColorHint="#ADC2A9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
