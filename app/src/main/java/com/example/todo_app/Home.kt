@@ -47,7 +47,7 @@ class Home : AppCompatActivity() {
 
 
         var currentDateTime = LocalDate.now()
-        var day = "${currentDateTime.dayOfMonth}/${currentDateTime.month}/${currentDateTime.year}"
+        var day = "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
 
 
 

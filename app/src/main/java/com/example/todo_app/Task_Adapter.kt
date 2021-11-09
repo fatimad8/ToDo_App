@@ -43,7 +43,7 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
         db.collection("Tasks")
             .get()
         holder.taskTitleTextView.text = data[position].title
-        holder.taskNoteTextView.text = data[position].descrption
+        //holder.taskNoteTextView.text = data[position].descrption
         holder.taskDueDateTextView.text = data[position].dueDate.toString()
         holder.createDateTextView.text= data[position].creationDate
 
@@ -64,9 +64,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             holder.taskTitleTextView.setPaintFlags(
                 holder.taskTitleTextView.getPaintFlags() or
                         android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
-            holder.taskNoteTextView.setPaintFlags(
-                holder.taskNoteTextView.getPaintFlags() or
-                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
+//            holder.taskNoteTextView.setPaintFlags(
+//                holder.taskNoteTextView.getPaintFlags() or
+//                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
         } else {
 
             holder.checkState.isChecked=false
@@ -74,9 +74,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             holder.taskTitleTextView.setPaintFlags(
                 holder.taskTitleTextView.getPaintFlags() and
                         android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
-            holder.taskNoteTextView.setPaintFlags(
-                holder.taskNoteTextView.getPaintFlags() and
-                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+//            holder.taskNoteTextView.setPaintFlags(
+//                holder.taskNoteTextView.getPaintFlags() and
+//                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
 
         }
 
@@ -89,11 +89,11 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                         holder.taskTitleTextView.getPaintFlags() or
                                 android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
                         )
-
-                holder.taskNoteTextView.setPaintFlags(
-                    holder.taskNoteTextView.getPaintFlags() or
-                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-                )
+//
+//                holder.taskNoteTextView.setPaintFlags(
+//                    holder.taskNoteTextView.getPaintFlags() or
+//                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+              //  )
             }else{
                 db.collection("Tasks")
                     .document(data[position].id!!)
@@ -102,9 +102,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                 holder.taskTitleTextView.setPaintFlags(
                     holder.taskTitleTextView.getPaintFlags() and
                             android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
-                holder.taskNoteTextView.setPaintFlags(
-                    holder.taskNoteTextView.getPaintFlags() and
-                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+//                holder.taskNoteTextView.setPaintFlags(
+//                    holder.taskNoteTextView.getPaintFlags() and
+//                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
             }
 
         }
@@ -238,7 +238,7 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
 
 class TaskHolder(v: View) : RecyclerView.ViewHolder(v) {
     var taskTitleTextView = v.findViewById<TextView>(R.id.textViewTaskTitle)
-    var taskNoteTextView = v.findViewById<TextView>(R.id.textViewTaskNote)
+    //var taskNoteTextView = v.findViewById<TextView>(R.id.textViewTaskNote)
     var taskDueDateTextView = v.findViewById<TextView>(R.id.textViewDueDate)
     var createDateTextView = v.findViewById<TextView>(R.id.textViewCreationDate)
     var updateImage = v.findViewById<ImageView>(R.id.imageViewUpdate)
