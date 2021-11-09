@@ -110,12 +110,11 @@
                 android:id="@+id/textViewDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="68dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/averia_gruesa_libre"
                 android:text="20-2-2021"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTaskNote" />
 
             <CheckBox
@@ -129,6 +128,19 @@
                 android:textColorHint="#ADC2A9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="68dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="2dp"
+                android:text="Due:"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDueDate"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTaskNote" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
