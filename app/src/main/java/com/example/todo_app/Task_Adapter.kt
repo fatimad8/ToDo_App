@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Paint
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,6 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolder>() {
-    val db = Firebase.firestore
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
@@ -35,9 +35,13 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
     }
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
+        val db = Firebase.firestore
+        db.collection("Tasks")
+            .get()
         holder.taskTitleTextView.text = data[position].title
         holder.taskNoteTextView.text = data[position].descrption
-        holder.taskDueDateTextView.text = "Due: " + data[position].dueDate.toString()
+        holder.taskDueDateTextView.text = data[position].dueDate.toString()
+        holder.createDateTextView.text= data[position].creationDate
 
 
         holder.itemView.setOnClickListener {
@@ -59,30 +63,45 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             holder.taskNoteTextView.setPaintFlags(
                 holder.taskNoteTextView.getPaintFlags() or
                         android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
-
-
         } else {
 
             holder.checkState.isChecked=false
 
-
+            holder.taskTitleTextView.setPaintFlags(
+                holder.taskTitleTextView.getPaintFlags() and
+                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+            holder.taskNoteTextView.setPaintFlags(
+                holder.taskNoteTextView.getPaintFlags() and
+                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
 
         }
 
-        holder.checkState.setOnClickListener {
+        holder.checkState.setOnCheckedChangeListener { compoundButton, b ->
+            if(compoundButton.isChecked){
                 db.collection("Tasks")
                     .document(data[position].id!!)
                     .update("compeleted", true)
                 holder.taskTitleTextView.setPaintFlags(
-                    holder.taskTitleTextView.getPaintFlags() or
-                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-                )
+                        holder.taskTitleTextView.getPaintFlags() or
+                                android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+                        )
 
                 holder.taskNoteTextView.setPaintFlags(
                     holder.taskNoteTextView.getPaintFlags() or
                             android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
                 )
-
+            }else{
+                db.collection("Tasks")
+                    .document(data[position].id!!)
+                    .update("compeleted", false)
+                compoundButton.isChecked=false
+                holder.taskTitleTextView.setPaintFlags(
+                    holder.taskTitleTextView.getPaintFlags() and
+                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+                holder.taskNoteTextView.setPaintFlags(
+                    holder.taskNoteTextView.getPaintFlags() and
+                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+            }
 
         }
 
@@ -152,8 +171,12 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                 DatePickerDialog.show()
             }
             var updateDialogBtn = u.findViewById<Button>(R.id.buttonUpdate)
+
             var TasktitleEditText = u.findViewById<EditText>(R.id.EditTextTaskTitle)
+            TasktitleEditText.text=Editable.Factory.getInstance().newEditable(data[position].title)
+
             var TaskdescrptionEditText = u.findViewById<EditText>(R.id.EditTextTaskNote)
+            TaskdescrptionEditText.text=Editable.Factory.getInstance().newEditable(data[position].descrption)
 
             updateDialogBtn.setOnClickListener {
                 db.collection("Tasks")
@@ -170,8 +193,10 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                             "Task has been updated successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        data.removeAt(position)
-                        notifyDataSetChanged()
+                        var cont=holder.checkState.context
+
+                        notifyItemChanged(position)
+                         //notifyDataSetChanged(position)
                     }
                     .addOnFailureListener {e->
                         Log.w(ContentValues.TAG, "Error updating document", e)

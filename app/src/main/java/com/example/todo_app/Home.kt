@@ -36,7 +36,8 @@ class Home : AppCompatActivity() {
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
         var currentDateTime = LocalDate.now()
-        var day = currentDateTime.dayOfMonth
+        var day = "${currentDateTime.dayOfMonth}/${currentDateTime.month}/${currentDateTime.year}"
+
 
 
         var dialog = layoutInflater.inflate(R.layout.task_dialog, null)
@@ -61,8 +62,9 @@ class Home : AppCompatActivity() {
                             document.getString("title")!!,
                             document.getString("descrption")!!,
                             document.getString("dueDate")!!,
+                            document.getString("creationDate")!!,
                             document.getBoolean("compeleted")!!
-                        )
+                         )
                     )
 
                 }
@@ -119,6 +121,7 @@ class Home : AppCompatActivity() {
                         "title" to title,
                         "descrption" to desccrption,
                         "dueDate" to dateTextView.text,
+                        "creationDate" to day,
                         "compeleted" to false
                         //"creationDate" to currentDateTime.toString().toLong()
                     )
@@ -146,71 +149,6 @@ class Home : AppCompatActivity() {
         }
 
 
-
-
-//        updateImage.bringToFront()
-//
-//        updateImage.setOnClickListener {
-//            var intent=Intent(this,Update::class.java)
-//            startActivity(intent)
-//        }
-
-//        updateImage.setOnClickListener {
-//
-//            var uDialog = AlertDialog.Builder(this)
-//                .setView(updateDialog)
-//                .show()
-//
-//            var dateImageView = updateDialog.findViewById<ImageView>(R.id.imageViewDate)
-//
-//            dateImageView.setOnClickListener {
-//                var c = Calendar.getInstance()
-//                var year = c.get(Calendar.YEAR)
-//                var month = c.get(Calendar.MONTH)
-//                var day = c.get(Calendar.DAY_OF_MONTH)
-//
-//                var DatePickerDialog = DatePickerDialog(
-//                    this,
-//                    DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-//
-//                        dateTextView.text = "$dayOfMonth/${month + 1}/$year"
-//                    },
-//                    year,
-//                    month,
-//                    day
-//                )
-//                DatePickerDialog.show()
-//            }
-//            var updateDialogBtn = updateDialog.findViewById<Button>(R.id.buttonUpdate)
-//            var TasktitleEditText = updateDialog.findViewById<EditText>(R.id.EditTextTaskTitle)
-//            var TaskdescrptionEditText = updateDialog.findViewById<EditText>(R.id.EditTextTaskNote)
-//
-//            updateDialogBtn.setOnClickListener {
-//
-//                db.collection("Tasks")
-//                    .document()
-//                    .update(mapOf("title" to TasktitleEditText.text,
-//                        "descrption" to TaskdescrptionEditText,
-//                        "dueDate" to dateTextView,
-//                        "compeleted" to true)
-//                    )
-//                    .addOnSuccessListener {
-//                        Toast.makeText(
-//                            this,
-//                            "Task has been updated successfully",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        mRecyclerView.adapter?.notifyDataSetChanged()
-//                    }
-//                    .addOnFailureListener {e->
-//                        Log.w(TAG, "Error updating document", e)
-//                    }
-//               uDialog.dismiss()
-//
-//              }
-//         }
-
-
     }
 
     override fun onRestart() {
@@ -232,6 +170,7 @@ class Home : AppCompatActivity() {
                             document.getString("title")!!,
                             document.getString("descrption")!!,
                             document.getString("dueDate")!!,
+                            document.getString("creationDate")!!,
                             document.getBoolean("compeleted")!!
                         )
                     )
@@ -264,6 +203,7 @@ class Home : AppCompatActivity() {
                             document.getString("title")!!,
                             document.getString("descrption")!!,
                             document.getString("dueDate")!!,
+                            document.getString("creationDate")!!,
                             document.getBoolean("compeleted")!!
                         )
                     )

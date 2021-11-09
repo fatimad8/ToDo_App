@@ -23,7 +23,7 @@ class Details : AppCompatActivity() {
         note.text=task.descrption
         mToolbar.title=task.title
         due.text=task.dueDate
-        create.text=""
+        create.text=task.creationDate
         mToolbar.setTitleTextColor(Color.WHITE)
         mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         mToolbar.setNavigationOnClickListener {
