@@ -1,6 +1,5 @@
 package com.example.todo_app
 
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +11,7 @@ class Details : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        var mToolbar= findViewById<Toolbar>(R.id.mToolbar)
+        var mToolbar= findViewById<Toolbar>(R.id.mToolbar1)
         var note= findViewById<TextView>(R.id.textViewNote)
         var due= findViewById<TextView>(R.id.textViewDue)
         var create= findViewById<TextView>(R.id.textViewcreate)

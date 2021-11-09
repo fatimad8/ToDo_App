@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_app.model.Task
@@ -34,6 +36,15 @@ class Home : AppCompatActivity() {
         mRecyclerView.layoutManager = LinearLayoutManager(this)
 
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
+
+        var mToolbar= findViewById<Toolbar>(R.id.mToolbar1)
+        mToolbar.title="ToDo App"
+        mToolbar.setTitleTextColor(Color.WHITE)
+        mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+        mToolbar.setNavigationOnClickListener {
+            finish()
+        }
+
 
         var currentDateTime = LocalDate.now()
         var day = "${currentDateTime.dayOfMonth}/${currentDateTime.month}/${currentDateTime.year}"
