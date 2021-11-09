@@ -39,6 +39,18 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
         holder.taskNoteTextView.text = data[position].descrption
         holder.taskDueDateTextView.text = "Due: " + data[position].dueDate.toString()
 
+
+        holder.itemView.setOnClickListener {
+            println(data[position].title)
+
+            var intent= Intent(holder.itemView.context,Details::class.java)
+            var t = data[position]
+            intent.putExtra("task",t)
+
+            holder.itemView.context.startActivity(intent)
+        }
+
+
         if (data[position].stauts) {
             holder.checkState.isChecked=true
             holder.taskTitleTextView.setPaintFlags(
@@ -92,6 +104,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                                 "Deleted successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            data.removeAt(position)
+                            notifyDataSetChanged()
                         }
                         .addOnFailureListener {
                             Toast.makeText(
@@ -155,12 +170,14 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                             "Task has been updated successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-
+                        data.removeAt(position)
+                        notifyDataSetChanged()
                     }
                     .addOnFailureListener {e->
                         Log.w(ContentValues.TAG, "Error updating document", e)
                     }
                 updateDialog.dismiss()
+
 
             }
 
