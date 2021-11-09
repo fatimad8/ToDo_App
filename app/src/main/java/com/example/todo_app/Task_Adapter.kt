@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
         } else {
 
             holder.checkState.isChecked=false
+
+
+
         }
 
         holder.checkState.setOnClickListener {
@@ -139,9 +143,10 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             updateDialogBtn.setOnClickListener {
                 db.collection("Tasks")
                     .document(data[position].id!!)
-                    .update(mapOf("title" to TasktitleEditText.text,
-                        "descrption" to TaskdescrptionEditText.text,
-                        "dueDate" to holder.taskDueDateTextView,
+                    .update(mapOf
+                        ("title" to TasktitleEditText.text.toString(),
+                        "descrption" to TaskdescrptionEditText.text.toString(),
+                        "dueDate" to holder.taskDueDateTextView.text.toString(),
                         "compeleted" to data[position].stauts)
                     )
                     .addOnSuccessListener {

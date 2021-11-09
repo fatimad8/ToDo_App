@@ -131,14 +131,15 @@ class Home : AppCompatActivity() {
                                 "Task has been added successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            mRecyclerView.adapter?.notifyDataSetChanged()
-                        }
+                         }
                         .addOnFailureListener { e ->
                             Log.w(TAG, "Error adding document", e)
                         }
 
                 }
                 taskDialog.dismiss()
+                onResume()
+                mRecyclerView.adapter?.notifyDataSetChanged()
 
             }
 
