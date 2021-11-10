@@ -59,6 +59,7 @@ class Home : AppCompatActivity() {
         // var updateImage= row_task.findViewById<ImageView>(R.id.imageViewUpdate)
 
 
+
         var homeModel = HomeViewModel()
         var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -67,11 +68,8 @@ class Home : AppCompatActivity() {
             mRecyclerView.adapter = Task_Adapter(list)
             mRecyclerView.adapter?.notifyDataSetChanged()
 
-
         })
-        //mRecyclerView.adapter=Task_Adapter(homeModel.getAllTask())
-        mRecyclerView.adapter?.notifyDataSetChanged()
-
+         //mRecyclerView.adapter?.notifyDataSetChanged()
 
 
 
@@ -149,47 +147,11 @@ class Home : AppCompatActivity() {
 
     }
 
-//    override fun onRestart() {
-//        super.onRestart()
+//    override fun onResume() {
+//        super.onResume()
+//        Toast.makeText(this, "on resume", Toast.LENGTH_SHORT).show()
 //
-//        var homeVM = HomeViewModel()
 //
-//        //identify RV layout
-//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
-//        mRecyclerView.layoutManager = LinearLayoutManager(this)
-//        mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//        homeVM.getAllTask().observe(this, { list ->
-//            mRecyclerView.adapter = Task_Adapter(list)
-//            mRecyclerView.adapter?.notifyDataSetChanged()
-//        })
-//     }
-
-
-    override fun onResume() {
-        super.onResume()
-
-        val db = Firebase.firestore
-        var taskList = mutableListOf<Task>()
-        db.collection("Tasks")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                for (document in result) {
-                    taskList.add(
-                        Task(
-                            document.id,
-                            document.getString("title")!!,
-                            document.getString("descrption")!!,
-                            document.getString("dueDate")!!,
-                            document.getString("creationDate")!!,
-                            document.getBoolean("compeleted")!!
-                        )
-                    )
-                }
-            }
-    }
-
-
 //        var homevm = HomeViewModel()
 //
 //        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
@@ -200,50 +162,36 @@ class Home : AppCompatActivity() {
 //
 //            mRecyclerView.adapter = Task_Adapter(list)
 //            mRecyclerView.adapter?.notifyDataSetChanged()
-//
 //        })
-
-
-
-
-    override fun onRestart() {
-        super.onRestart()
-
-        val db = Firebase.firestore
-        var taskList = mutableListOf<Task>()
-        db.collection("Tasks")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                for (document in result) {
-                    taskList.add(
-                        Task(
-                            document.id,
-                            document.getString("title")!!,
-                            document.getString("descrption")!!,
-                            document.getString("dueDate")!!,
-                            document.getString("creationDate")!!,
-                            document.getBoolean("compeleted")!!
-                        )
-                    )
-                }
-            }
-    }
-}
-
-//        var homevm=HomeViewModel()
 //
-//        var mRecyclerView= findViewById<RecyclerView>(R.id.mRecyclerView)
-//        mRecyclerView.layoutManager=LinearLayoutManager(this)
-//        //mRecyclerView.adapter?.notifyDataSetChanged()
+//        mRecyclerView.adapter?.notifyDataSetChanged()
 //
-//        homevm.getAllTask().observe(this,{list->
-//
-//            mRecyclerView.adapter=Task_Adapter(list)
-//            mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//        })
 //
 //    }
 
+
+//    override fun onRestart() {
+//        super.onRestart()
+//         Toast.makeText(this, "on restart", Toast.LENGTH_SHORT).show()
+//
+//
+//         var homevm = HomeViewModel()
+//
+//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+//        mRecyclerView.layoutManager = LinearLayoutManager(this)
+//        //mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        homevm.getAllTask().observe(this, { list ->
+//
+//            mRecyclerView.adapter = Task_Adapter(list)
+//            mRecyclerView.adapter?.notifyDataSetChanged()
+//        })
+//
+//        mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//
+//
+//    }
+}
 
 

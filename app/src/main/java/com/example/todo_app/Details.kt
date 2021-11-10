@@ -30,11 +30,11 @@ class Details : AppCompatActivity() {
         }else if(task.stauts==false){
             status1.text="UnComplete"
         }
-         create.text=task.creationDate
+        create.text=task.creationDate
         mToolbar.setTitleTextColor(Color.WHITE)
         mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         mToolbar.setNavigationOnClickListener {
-           finish()
-        }
+            finish()
+         }
     }
 }

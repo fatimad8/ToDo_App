@@ -25,21 +25,26 @@ class HomeViewModel:ViewModel() {
         var mutableLiveData=MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
+
         db.collection("Tasks")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                for (document in result) {
-                    taskList.add(
-                        Task(
-                            document.id,
-                            document.getString("title")!!,
-                            document.getString("descrption")!!,
-                            document.getString("dueDate")!!,
-                            document.getString("creationDate")!!,
-                            document.getBoolean("compeleted")!!
+              .addSnapshotListener() { result,e ->
+                 if (result != null) {
+                     taskList.clear()
+                      for (document in result) {
+                        taskList.add(
+                            Task(
+                                document.id,
+                                document.getString("title")!!,
+                                document.getString("descrption")!!,
+                                document.getString("dueDate")!!,
+                                document.getString("creationDate")!!,
+                                document.getBoolean("compeleted")!!
+                            )
                         )
-                    )
-                }
+                    }
+
+                 }
+
                 mutableLiveData.postValue(taskList)
             }
         return mutableLiveData

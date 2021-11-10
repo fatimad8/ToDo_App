@@ -61,7 +61,8 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
 
 
         if (!data[position].stauts) {
-            holder.checkState.isChecked = false
+
+            holder.checkState.setChecked(false)
             holder.taskTitleTextView.paintFlags =
                 holder.taskTitleTextView.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         } else {
