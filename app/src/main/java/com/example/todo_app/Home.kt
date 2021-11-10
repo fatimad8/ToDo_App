@@ -29,60 +29,50 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
-        var taskList = mutableListOf<Task>()
 
-        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
-        mRecyclerView.adapter=Task_Adapter(taskList)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        var taskList = mutableListOf<Task>()
+        val db = Firebase.firestore
+
+        //mRecyclerView.adapter=Task_Adapter(taskList)
+        //mRecyclerView.layoutManager = LinearLayoutManager(this)
 
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
-        var mToolbar= findViewById<Toolbar>(R.id.mToolbar1)
-        mToolbar.title="ToDo App"
+        var mToolbar = findViewById<Toolbar>(R.id.mToolbar1)
+        mToolbar.title = "ToDo App"
         mToolbar.setTitleTextColor(Color.WHITE)
         mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         mToolbar.setNavigationOnClickListener {
             finish()
         }
 
-
         var currentDateTime = LocalDate.now()
-        var day = "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
-
+        var day =
+            "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
 
 
         var dialog = layoutInflater.inflate(R.layout.task_dialog, null)
-        var updateDialog= layoutInflater.inflate(R.layout.update_dialog, null)
+        var updateDialog = layoutInflater.inflate(R.layout.update_dialog, null)
         var row_task = layoutInflater.inflate(R.layout.list_row_task, null)
 
         var dateTextView = row_task.findViewById<TextView>(R.id.textViewDueDate)
-       // var updateImage= row_task.findViewById<ImageView>(R.id.imageViewUpdate)
+        // var updateImage= row_task.findViewById<ImageView>(R.id.imageViewUpdate)
 
 
+        var homeModel = HomeViewModel()
+        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val db = Firebase.firestore
+        homeModel.getAllTask().observe(this, { list ->
+            mRecyclerView.adapter = Task_Adapter(list)
+            mRecyclerView.adapter?.notifyDataSetChanged()
 
 
-        db.collection("Tasks")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                for (document in result) {
-                    taskList.add(
-                        Task(
-                            document.id,
-                            document.getString("title")!!,
-                            document.getString("descrption")!!,
-                            document.getString("dueDate")!!,
-                            document.getString("creationDate")!!,
-                            document.getBoolean("compeleted")!!
-                         )
-                    )
+        })
+        //mRecyclerView.adapter=Task_Adapter(homeModel.getAllTask())
+        mRecyclerView.adapter?.notifyDataSetChanged()
 
-                }
 
-                mRecyclerView.adapter = Task_Adapter(taskList)
-                mRecyclerView.adapter?.notifyDataSetChanged()
-            }
 
 
         addButton.setOnClickListener {
@@ -106,18 +96,15 @@ class Home : AppCompatActivity() {
 
                         dateTextView.text = "$dayOfMonth/${month + 1}/$year"
 
-
                     },
                     year,
                     month,
                     day
                 )
 
-
                 DatePickerDialog.show()
 
             }
-
 
             var addDialogBtn = dialog.findViewById<Button>(R.id.buttonUpdate)
             var TasktitleEditText = dialog.findViewById<EditText>(R.id.EditTextTaskTitle)
@@ -145,7 +132,7 @@ class Home : AppCompatActivity() {
                                 "Task has been added successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
-                         }
+                        }
                         .addOnFailureListener { e ->
                             Log.w(TAG, "Error adding document", e)
                         }
@@ -162,48 +149,28 @@ class Home : AppCompatActivity() {
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        val db = Firebase.firestore
-        var taskList = mutableListOf<Task>()
-        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+//    override fun onRestart() {
+//        super.onRestart()
+//
+//        var homeVM = HomeViewModel()
+//
+//        //identify RV layout
+//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+//        mRecyclerView.layoutManager = LinearLayoutManager(this)
+//        mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        homeVM.getAllTask().observe(this, { list ->
+//            mRecyclerView.adapter = Task_Adapter(list)
+//            mRecyclerView.adapter?.notifyDataSetChanged()
+//        })
+//     }
 
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-
-
-        db.collection("Tasks")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                for (document in result) {
-                    taskList.add(
-                        Task(
-                            document.id,
-                            document.getString("title")!!,
-                            document.getString("descrption")!!,
-                            document.getString("dueDate")!!,
-                            document.getString("creationDate")!!,
-                            document.getBoolean("compeleted")!!
-                        )
-                    )
-
-                }
-                 mRecyclerView.adapter=Task_Adapter(taskList)
-                 mRecyclerView.adapter?.notifyDataSetChanged()
-            }
-
-    }
 
     override fun onResume() {
         super.onResume()
-        var row_task = layoutInflater.inflate(R.layout.list_row_task, null)
-        var checkbox= row_task.findViewById<CheckBox>(R.id.checkBoxState)
+
         val db = Firebase.firestore
-        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
         var taskList = mutableListOf<Task>()
-
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-
-
         db.collection("Tasks")
             .get()
             .addOnSuccessListener { result: QuerySnapshot ->
@@ -219,10 +186,64 @@ class Home : AppCompatActivity() {
                         )
                     )
                 }
-                mRecyclerView.adapter=Task_Adapter(taskList)
-                mRecyclerView.adapter?.notifyDataSetChanged()
-
             }
+    }
 
+
+//        var homevm = HomeViewModel()
+//
+//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+//        mRecyclerView.layoutManager = LinearLayoutManager(this)
+//        //mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        homevm.getAllTask().observe(this, { list ->
+//
+//            mRecyclerView.adapter = Task_Adapter(list)
+//            mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        })
+
+
+
+
+    override fun onRestart() {
+        super.onRestart()
+
+        val db = Firebase.firestore
+        var taskList = mutableListOf<Task>()
+        db.collection("Tasks")
+            .get()
+            .addOnSuccessListener { result: QuerySnapshot ->
+                for (document in result) {
+                    taskList.add(
+                        Task(
+                            document.id,
+                            document.getString("title")!!,
+                            document.getString("descrption")!!,
+                            document.getString("dueDate")!!,
+                            document.getString("creationDate")!!,
+                            document.getBoolean("compeleted")!!
+                        )
+                    )
+                }
+            }
     }
 }
+
+//        var homevm=HomeViewModel()
+//
+//        var mRecyclerView= findViewById<RecyclerView>(R.id.mRecyclerView)
+//        mRecyclerView.layoutManager=LinearLayoutManager(this)
+//        //mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        homevm.getAllTask().observe(this,{list->
+//
+//            mRecyclerView.adapter=Task_Adapter(list)
+//            mRecyclerView.adapter?.notifyDataSetChanged()
+//
+//        })
+//
+//    }
+
+
+

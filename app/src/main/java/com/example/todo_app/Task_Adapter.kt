@@ -34,7 +34,6 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             .inflate(R.layout.list_row_task, parent, false)
 
 
-
         return TaskHolder(v)
     }
 
@@ -42,71 +41,48 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
         val db = Firebase.firestore
         db.collection("Tasks")
             .get()
-        holder.taskTitleTextView.text = data[position].title
+
+
+        holder.taskTitleTextView.text = data[position].title.capitalize()
         //holder.taskNoteTextView.text = data[position].descrption
         holder.taskDueDateTextView.text = data[position].dueDate.toString()
         holder.createDateTextView.text= data[position].creationDate
 
 
         holder.itemView.setOnClickListener {
-            println(data[position].title)
+            //println(data[position].title)
 
             var intent= Intent(holder.itemView.context,Details::class.java)
-            var t = data[position]
-            intent.putExtra("task",t)
+            //var t = data[position]
+            intent.putExtra("task",data[position])
 
             holder.itemView.context.startActivity(intent)
         }
 
 
-        if (data[position].stauts) {
-            holder.checkState.isChecked=true
-            holder.taskTitleTextView.setPaintFlags(
-                holder.taskTitleTextView.getPaintFlags() or
-                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
-//            holder.taskNoteTextView.setPaintFlags(
-//                holder.taskNoteTextView.getPaintFlags() or
-//                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
+        if (!data[position].stauts) {
+            holder.checkState.isChecked = false
+            holder.taskTitleTextView.paintFlags =
+                holder.taskTitleTextView.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         } else {
-
-            holder.checkState.isChecked=false
-
-            holder.taskTitleTextView.setPaintFlags(
-                holder.taskTitleTextView.getPaintFlags() and
-                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
-//            holder.taskNoteTextView.setPaintFlags(
-//                holder.taskNoteTextView.getPaintFlags() and
-//                        android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
-
+            holder.checkState.isChecked
+            holder.taskTitleTextView.paintFlags =
+                holder.taskTitleTextView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
         }
 
         holder.checkState.setOnCheckedChangeListener { compoundButton, b ->
-            if(compoundButton.isChecked){
-                db.collection("Tasks")
-                    .document(data[position].id!!)
+            if (b) {
+                db.collection("Tasks").document(data[position].id!!)
                     .update("compeleted", true)
-                holder.taskTitleTextView.setPaintFlags(
-                        holder.taskTitleTextView.getPaintFlags() or
-                                android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-                        )
-//
-//                holder.taskNoteTextView.setPaintFlags(
-//                    holder.taskNoteTextView.getPaintFlags() or
-//                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-              //  )
-            }else{
-                db.collection("Tasks")
-                    .document(data[position].id!!)
+                holder.taskTitleTextView.paintFlags =
+                    holder.taskTitleTextView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                db.collection("Tasks").document(data[position].id!!)
                     .update("compeleted", false)
-                compoundButton.isChecked=false
-                holder.taskTitleTextView.setPaintFlags(
-                    holder.taskTitleTextView.getPaintFlags() and
-                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
-//                holder.taskNoteTextView.setPaintFlags(
-//                    holder.taskNoteTextView.getPaintFlags() and
-//                            android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv())
+                !compoundButton.isChecked
+                holder.taskTitleTextView.paintFlags =
+                    holder.taskTitleTextView.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-
         }
 
 
@@ -217,11 +193,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                     }
                 updateDialog.dismiss()
 
-
             }
 
         }
-
             }
 
 

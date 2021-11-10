@@ -15,6 +15,7 @@ class Details : AppCompatActivity() {
         var note= findViewById<TextView>(R.id.textViewNote)
         var due= findViewById<TextView>(R.id.textViewDue)
         var create= findViewById<TextView>(R.id.textViewcreate)
+        var status1= findViewById<TextView>(R.id.textViewStatus)
 
         var task= intent.getSerializableExtra("task") as Task
 
@@ -22,7 +23,14 @@ class Details : AppCompatActivity() {
         note.text=task.descrption
         mToolbar.title=task.title
         due.text=task.dueDate
-        create.text=task.creationDate
+
+
+        if(task.stauts){
+            status1.text="Completed"
+        }else if(task.stauts==false){
+            status1.text="UnComplete"
+        }
+         create.text=task.creationDate
         mToolbar.setTitleTextColor(Color.WHITE)
         mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         mToolbar.setNavigationOnClickListener {

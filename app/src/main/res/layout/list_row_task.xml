@@ -114,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="32dp"
+                android:checked="true"
                 android:shadowColor="#ADC2A9"
                 android:textColor="#ADC2A9"
                 android:textColorHint="#ADC2A9"
