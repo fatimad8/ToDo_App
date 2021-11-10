@@ -9,6 +9,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
@@ -33,15 +35,13 @@ class Home : AppCompatActivity() {
         var taskList = mutableListOf<Task>()
         val db = Firebase.firestore
 
-        //mRecyclerView.adapter=Task_Adapter(taskList)
-        //mRecyclerView.layoutManager = LinearLayoutManager(this)
-
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
         var mToolbar = findViewById<Toolbar>(R.id.mToolbar1)
         mToolbar.title = "ToDo App"
         mToolbar.setTitleTextColor(Color.WHITE)
         mToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+        setSupportActionBar(mToolbar)
         mToolbar.setNavigationOnClickListener {
             finish()
         }
@@ -56,8 +56,6 @@ class Home : AppCompatActivity() {
         var row_task = layoutInflater.inflate(R.layout.list_row_task, null)
 
         var dateTextView = row_task.findViewById<TextView>(R.id.textViewDueDate)
-        // var updateImage= row_task.findViewById<ImageView>(R.id.imageViewUpdate)
-
 
 
         var homeModel = HomeViewModel()
@@ -69,9 +67,6 @@ class Home : AppCompatActivity() {
             mRecyclerView.adapter?.notifyDataSetChanged()
 
         })
-         //mRecyclerView.adapter?.notifyDataSetChanged()
-
-
 
         addButton.setOnClickListener {
 
@@ -119,7 +114,6 @@ class Home : AppCompatActivity() {
                         "dueDate" to dateTextView.text,
                         "creationDate" to day,
                         "compeleted" to false
-                        //"creationDate" to currentDateTime.toString().toLong()
                     )
 
                     db.collection("Tasks")
@@ -147,51 +141,37 @@ class Home : AppCompatActivity() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        Toast.makeText(this, "on resume", Toast.LENGTH_SHORT).show()
-//
-//
-//        var homevm = HomeViewModel()
-//
-//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
-//        mRecyclerView.layoutManager = LinearLayoutManager(this)
-//        //mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//        homevm.getAllTask().observe(this, { list ->
-//
-//            mRecyclerView.adapter = Task_Adapter(list)
-//            mRecyclerView.adapter?.notifyDataSetChanged()
-//        })
-//
-//        mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//
-//    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-//    override fun onRestart() {
-//        super.onRestart()
-//         Toast.makeText(this, "on restart", Toast.LENGTH_SHORT).show()
-//
-//
-//         var homevm = HomeViewModel()
-//
-//        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
-//        mRecyclerView.layoutManager = LinearLayoutManager(this)
-//        //mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//        homevm.getAllTask().observe(this, { list ->
-//
-//            mRecyclerView.adapter = Task_Adapter(list)
-//            mRecyclerView.adapter?.notifyDataSetChanged()
-//        })
-//
-//        mRecyclerView.adapter?.notifyDataSetChanged()
-//
-//
-//
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var mRecyclerView = findViewById<RecyclerView>(R.id.mRecyclerView)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        when (item.itemId) {
+            R.id.alphaItem -> {
+                var homevm = HomeViewModel()
+                homevm.sortTask().observe(this, { list ->
+
+                    mRecyclerView.adapter = Task_Adapter(list)
+                    mRecyclerView.adapter?.notifyDataSetChanged()
+                })
+            }
+            R.id.filterItem -> {
+                var homevm = HomeViewModel()
+                homevm.filterTask().observe(this, { list ->
+
+                    mRecyclerView.adapter = Task_Adapter(list)
+                    mRecyclerView.adapter?.notifyDataSetChanged()
+                })
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 }
 
 
