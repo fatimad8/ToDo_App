@@ -9,7 +9,9 @@
         <entry key="app/src/main/res/drawable/unchecked.xml" value="0.1824074074074074" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.14990942028985507" />
         <entry key="app/src/main/res/layout/activity_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottom_app_bar.xml" value="0.1" />

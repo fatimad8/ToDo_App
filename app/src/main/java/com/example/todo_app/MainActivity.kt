@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        var intent = Intent(this, Home::class.java).apply {
+        var intent = Intent(this, Login::class.java).apply {
             startActivity(this)
         }
 
