@@ -23,6 +23,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.util.*
+import com.google.firebase.firestore.DocumentReference
+
+import com.google.firebase.firestore.FirebaseFirestore
+
+import com.google.firebase.auth.FirebaseAuth
+
+
+
 
 
 class Home : AppCompatActivity() {
@@ -34,6 +42,11 @@ class Home : AppCompatActivity() {
 
         var taskList = mutableListOf<Task>()
         val db = Firebase.firestore
+
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val rootRef = FirebaseFirestore.getInstance()
+        val uidRef = rootRef.collection("users").document(uid)
+
 
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
@@ -116,7 +129,7 @@ class Home : AppCompatActivity() {
                         "compeleted" to false
                     )
 
-                    db.collection("Tasks")
+                    db.collection("users").document(uid).collection("task")
                         .add(task)
                         .addOnSuccessListener { t ->
                             Toast.makeText(

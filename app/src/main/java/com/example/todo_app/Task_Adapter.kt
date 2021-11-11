@@ -26,6 +26,8 @@ import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_app.model.Task
 import com.google.android.material.dialog.MaterialDialogs
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
@@ -47,7 +49,11 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         val db = Firebase.firestore
-        db.collection("Tasks")
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val rootRef = FirebaseFirestore.getInstance()
+
+         db.collection("users").document(uid).collection("task")
+        //db.collection("Tasks")
             .get()
 
 
@@ -85,13 +91,16 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
 
         holder.checkState.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
-                db.collection("Tasks").document(data[position].id!!)
+
+                db.collection("users").document(uid).collection("task").document(data[position].id!!)
+                //db.collection("Tasks").document(data[position].id!!)
                     .update("compeleted", true)
                 holder.taskTitleTextView.paintFlags =
                     holder.taskTitleTextView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
                 holder.taskTitleTextView.setTextColor(Color.parseColor("#6e6d6a"))
             } else {
-                db.collection("Tasks").document(data[position].id!!)
+                db.collection("users").document(uid).collection("task").document(data[position].id!!)
+                    //db.collection("Tasks").document(data[position].id!!)
                     .update("compeleted", false)
                 !compoundButton.isChecked
                 holder.taskTitleTextView.paintFlags =
@@ -123,7 +132,9 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                 .setTitle("Delete")
                 .setMessage("Do you want to delete?")
                 .setPositiveButton("Yes") { dialog, which ->
-                    db.collection("Tasks").document(data[position].id!!)
+                    db.collection("users").document(uid).collection("task").document(data[position].id!!)
+
+                        //db.collection("Tasks").document(data[position].id!!)
                         .delete()
                         .addOnSuccessListener {
                             Toast.makeText(
@@ -192,8 +203,8 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             data[position].dueDate=holder.taskDueDateTextView.text.toString()
             data[position].stauts
             updateDialogBtn.setOnClickListener {
-                db.collection("Tasks")
-                    .document(data[position].id!!)
+                db.collection("users").document(uid).collection("task").document(data[position].id!!)
+                    //db.collection("Tasks").document(data[position].id!!)
                     .update(
                         mapOf
                         ("title" to TasktitleEditText.text.toString(),

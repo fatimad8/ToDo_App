@@ -13,6 +13,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.todo_app.model.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -25,8 +27,11 @@ class HomeViewModel:ViewModel() {
         var mutableLiveData = MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val rootRef = FirebaseFirestore.getInstance()
 
-        db.collection("Tasks")
+        //db.collection("Tasks")
+        db.collection("users").document(uid).collection("task")
             .addSnapshotListener() { result, e ->
                 if (result != null) {
                     taskList.clear()
@@ -56,8 +61,8 @@ class HomeViewModel:ViewModel() {
         var mutableLiveData = MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
-
-        db.collection("Tasks").orderBy("title", Query.Direction.ASCENDING)
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        db.collection("users").document(uid).collection("task").orderBy("title", Query.Direction.ASCENDING)
             .addSnapshotListener() { result, e ->
                 if (result != null) {
                     taskList.clear()
@@ -85,7 +90,8 @@ class HomeViewModel:ViewModel() {
         var mutableLiveData = MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
-        db.collection("Tasks").whereEqualTo("compeleted", false)
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        db.collection("users").document(uid).collection("task").whereEqualTo("compeleted", false)
             .addSnapshotListener() { result, e ->
                 if (result != null) {
                     taskList.clear()
