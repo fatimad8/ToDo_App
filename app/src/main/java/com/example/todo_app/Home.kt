@@ -158,6 +158,7 @@ class Home : AppCompatActivity() {
                     mRecyclerView.adapter = Task_Adapter(list)
                     mRecyclerView.adapter?.notifyDataSetChanged()
                 })
+                Toast.makeText(this, "task sorted successfully", Toast.LENGTH_SHORT).show()
             }
             R.id.filterItem -> {
                 var homevm = HomeViewModel()
@@ -166,6 +167,8 @@ class Home : AppCompatActivity() {
                     mRecyclerView.adapter = Task_Adapter(list)
                     mRecyclerView.adapter?.notifyDataSetChanged()
                 })
+                Toast.makeText(this, "task filtered successfully", Toast.LENGTH_SHORT).show()
+
             }
 
         }

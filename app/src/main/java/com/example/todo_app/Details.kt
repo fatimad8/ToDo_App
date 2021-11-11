@@ -21,7 +21,7 @@ class Details : AppCompatActivity() {
 
 
         note.text=task.descrption
-        mToolbar.title=task.title
+        mToolbar.title=task.title.capitalize()
         due.text=task.dueDate
 
 

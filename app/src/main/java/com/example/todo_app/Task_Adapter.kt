@@ -1,11 +1,14 @@
 package com.example.todo_app
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Paint
+import android.os.Build
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +16,7 @@ import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivities
 import androidx.core.content.ContextCompat.startActivity
@@ -24,6 +28,8 @@ import com.example.todo_app.model.Task
 import com.google.android.material.dialog.MaterialDialogs
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolder>() {
@@ -37,16 +43,21 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
         return TaskHolder(v)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         val db = Firebase.firestore
         db.collection("Tasks")
             .get()
 
 
+
+
         holder.taskTitleTextView.text = data[position].title.capitalize()
         //holder.taskNoteTextView.text = data[position].descrption
-        holder.taskDueDateTextView.text = data[position].dueDate.toString()
+        holder.taskDueDateTextView.text = data[position].dueDate
         holder.createDateTextView.text= data[position].creationDate
+        holder.dueTextView.text="Due:"
 
 
         holder.itemView.setOnClickListener {
@@ -62,13 +73,14 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
 
         if (!data[position].stauts) {
 
-            holder.checkState.setChecked(false)
+            holder.checkState.isChecked= false
             holder.taskTitleTextView.paintFlags =
                 holder.taskTitleTextView.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         } else {
             holder.checkState.isChecked
             holder.taskTitleTextView.paintFlags =
                 holder.taskTitleTextView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.taskTitleTextView.setTextColor(Color.parseColor("#807f7e"))
         }
 
         holder.checkState.setOnCheckedChangeListener { compoundButton, b ->
@@ -77,6 +89,7 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                     .update("compeleted", true)
                 holder.taskTitleTextView.paintFlags =
                     holder.taskTitleTextView.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
+                holder.taskTitleTextView.setTextColor(Color.parseColor("#6e6d6a"))
             } else {
                 db.collection("Tasks").document(data[position].id!!)
                     .update("compeleted", false)
@@ -86,9 +99,23 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
             }
         }
 
+        var currentDateTime = LocalDate.now()
+        var day =
+            "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        sdf.format(Date())
+        var parsedDateLocal:Date = sdf.parse(day)
+        var parsedDateDue:Date = sdf.parse(data[position].dueDate)
 
 
 
+        if((parsedDateDue.before(parsedDateLocal)) && data[position].stauts==false ){
+             holder.taskDueDateTextView.setTextColor(Color.parseColor("#C61313"))
+            holder.dueTextView.setTextColor(Color.parseColor("#C61313"))
+
+
+        }
 
 
         holder.deleteCardView.setOnClickListener {
@@ -105,7 +132,7 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            data.removeAt(position)
+                            //data.removeAt(position)
                             notifyDataSetChanged()
                         }
                         .addOnFailureListener {
@@ -181,12 +208,12 @@ class Task_Adapter(var data: MutableList<Task>) : RecyclerView.Adapter<TaskHolde
                             Toast.LENGTH_SHORT
                         ).show()
                         //var cont: Context = Home::class.java as Context
-                        var i=Intent(holder.updateImage.context,Home::class.java)
-                        holder.updateImage.context.startActivity(i)
-
-
-                        notifyItemChanged(position)
-                        notifyDataSetChanged( )
+//                        var i=Intent(holder.updateImage.context,Home::class.java)
+//                        holder.updateImage.context.startActivity(i)
+//
+//
+//                        notifyItemChanged(position)
+//                        notifyDataSetChanged( )
 
                     }
                     .addOnFailureListener {e->
@@ -218,6 +245,7 @@ class TaskHolder(v: View) : RecyclerView.ViewHolder(v) {
     var createDateTextView = v.findViewById<TextView>(R.id.textViewCreationDate)
     var updateImage = v.findViewById<ImageView>(R.id.imageViewUpdate)
     var deleteCardView = v.findViewById<CardView>(R.id.deleteCardview)
+    var dueTextView= v.findViewById<TextView>(R.id.DueTextView)
     var checkState = v.findViewById<CheckBox>(R.id.checkBoxState)
 
 

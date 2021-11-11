@@ -21,46 +21,13 @@ import com.google.firebase.ktx.Firebase
 class HomeViewModel:ViewModel() {
 
 
-
-    fun getAllTask():MutableLiveData<MutableList<Task>>{
-        var mutableLiveData=MutableLiveData<MutableList<Task>>()
+    fun getAllTask(): MutableLiveData<MutableList<Task>> {
+        var mutableLiveData = MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
 
         db.collection("Tasks")
-              .addSnapshotListener() { result,e ->
-                 if (result != null) {
-                     taskList.clear()
-                      for (document in result) {
-                        taskList.add(
-                            Task(
-                                document.id,
-                                document.getString("title")!!,
-                                document.getString("descrption")!!,
-                                document.getString("dueDate")!!,
-                                document.getString("creationDate")!!,
-                                document.getBoolean("compeleted")!!
-                            )
-                        )
-                    }
-
-                 }
-
-                mutableLiveData.postValue(taskList)
-            }
-        return mutableLiveData
-
-}
-
-
-
-    fun sortTask():MutableLiveData<MutableList<Task>>{
-        var mutableLiveData=MutableLiveData<MutableList<Task>>()
-        val db = Firebase.firestore
-        var taskList = mutableListOf<Task>()
-
-        db.collection("Tasks").orderBy("title",Query.Direction.ASCENDING)
-            .addSnapshotListener() { result,e ->
+            .addSnapshotListener() { result, e ->
                 if (result != null) {
                     taskList.clear()
                     for (document in result) {
@@ -81,15 +48,17 @@ class HomeViewModel:ViewModel() {
                 mutableLiveData.postValue(taskList)
             }
         return mutableLiveData
+
     }
 
-    fun filterTask():MutableLiveData<MutableList<Task>>{
-        var mutableLiveData=MutableLiveData<MutableList<Task>>()
+
+    fun sortTask(): MutableLiveData<MutableList<Task>> {
+        var mutableLiveData = MutableLiveData<MutableList<Task>>()
         val db = Firebase.firestore
         var taskList = mutableListOf<Task>()
 
-        db.collection("Tasks").whereEqualTo("compeleted",false)
-            .addSnapshotListener() { result,e ->
+        db.collection("Tasks").orderBy("title", Query.Direction.ASCENDING)
+            .addSnapshotListener() { result, e ->
                 if (result != null) {
                     taskList.clear()
                     for (document in result) {
@@ -104,18 +73,45 @@ class HomeViewModel:ViewModel() {
                             )
                         )
                     }
-
+                    mutableLiveData.postValue(taskList)
                 }
 
-                mutableLiveData.postValue(taskList)
             }
         return mutableLiveData
     }
 
 
+    fun filterTask(): MutableLiveData<MutableList<Task>> {
+        var mutableLiveData = MutableLiveData<MutableList<Task>>()
+        val db = Firebase.firestore
+        var taskList = mutableListOf<Task>()
+        db.collection("Tasks").whereEqualTo("compeleted", false)
+            .addSnapshotListener() { result, e ->
+                if (result != null) {
+                    taskList.clear()
+                    for (document in result) {
+                        taskList.add(
+                            Task(
+                                document.id,
+                                document.getString("title")!!,
+                                document.getString("descrption")!!,
+                                document.getString("dueDate")!!,
+                                document.getString("creationDate")!!,
+                                document.getBoolean("compeleted")!!
+                            )
+                        )
+                     }
+                    mutableLiveData.postValue(taskList)
+                }
 
+            }
+        return mutableLiveData
+    }
 
 }
+
+
+
 
 
 
