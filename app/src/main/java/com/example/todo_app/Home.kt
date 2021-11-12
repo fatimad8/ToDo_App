@@ -30,9 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 
 
-
-
-
 class Home : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +47,8 @@ class Home : AppCompatActivity() {
 
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
+        var fname=findViewById<TextView>(R.id.textViewName)
+
         var mToolbar = findViewById<Toolbar>(R.id.mToolbar1)
         mToolbar.title = "ToDo App"
         mToolbar.setTitleTextColor(Color.WHITE)
@@ -64,7 +63,7 @@ class Home : AppCompatActivity() {
             "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
 
 
-        var dialog = layoutInflater.inflate(R.layout.task_dialog,null)
+        var dialog = layoutInflater.inflate(R.layout.task_dialog, null)
         var updateDialog = layoutInflater.inflate(R.layout.update_dialog, null)
         var row_task = layoutInflater.inflate(R.layout.list_row_task, null)
 
@@ -152,8 +151,21 @@ class Home : AppCompatActivity() {
         }
 
 
-    }
 
+
+        var name:String=""
+        db.collection("users").document(uid)
+            .get()
+            .addOnSuccessListener { result ->
+                 name = result.getString("firstname").toString()
+                println("Hi $name")
+                fname.text="Hi ${name.capitalize()}"
+            }
+
+
+
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -184,8 +196,8 @@ class Home : AppCompatActivity() {
 
             }
 
-            R.id.signOut->{
-                var intent= Intent(this,Login::class.java)
+            R.id.signOut -> {
+                var intent = Intent(this, Login::class.java)
                 startActivity(intent)
                 Toast.makeText(this, "LogOut Success", Toast.LENGTH_SHORT).show()
 

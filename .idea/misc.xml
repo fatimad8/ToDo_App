@@ -8,7 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1824074074074074" />
         <entry key="app/src/main/res/drawable/unchecked.xml" value="0.1824074074074074" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />

@@ -35,6 +35,7 @@
                     android:id="@+id/EditTextTaskTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Title"
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -53,6 +54,7 @@
                     android:id="@+id/EditTextTaskNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Descrption "
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>

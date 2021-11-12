@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/___splash2">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mToolbar1"
@@ -21,10 +22,10 @@
         android:id="@+id/mRecyclerView"
         android:layout_width="0dp"
         android:layout_height="742dp"
-        android:background="@drawable/___splash"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mToolbar1" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,4 +40,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="313dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/alike_angular"
+        android:text="Hi "
+        android:textColor="#222121"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mToolbar1" />
+
+    <Space
+        android:layout_width="411dp"
+        android:layout_height="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
