@@ -11,5 +11,10 @@
         android:icon="@drawable/ic_baseline_filter_alt_24"
         android:title="Share"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/signOut"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Share"
+        app:showAsAction="always" />
 
 </menu>

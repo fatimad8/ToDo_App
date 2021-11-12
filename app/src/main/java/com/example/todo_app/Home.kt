@@ -64,7 +64,7 @@ class Home : AppCompatActivity() {
             "${currentDateTime.dayOfMonth}/${currentDateTime.month.value}/${currentDateTime.year}"
 
 
-        var dialog = layoutInflater.inflate(R.layout.task_dialog, null)
+        var dialog = layoutInflater.inflate(R.layout.task_dialog,null)
         var updateDialog = layoutInflater.inflate(R.layout.update_dialog, null)
         var row_task = layoutInflater.inflate(R.layout.list_row_task, null)
 
@@ -144,7 +144,7 @@ class Home : AppCompatActivity() {
 
                 }
                 taskDialog.dismiss()
-                onResume()
+                // onResume()
                 mRecyclerView.adapter?.notifyDataSetChanged()
 
             }
@@ -171,7 +171,7 @@ class Home : AppCompatActivity() {
                     mRecyclerView.adapter = Task_Adapter(list)
                     mRecyclerView.adapter?.notifyDataSetChanged()
                 })
-                Toast.makeText(this, "task sorted successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Task Sorted Successfully", Toast.LENGTH_SHORT).show()
             }
             R.id.filterItem -> {
                 var homevm = HomeViewModel()
@@ -180,7 +180,15 @@ class Home : AppCompatActivity() {
                     mRecyclerView.adapter = Task_Adapter(list)
                     mRecyclerView.adapter?.notifyDataSetChanged()
                 })
-                Toast.makeText(this, "task filtered successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Task Filtered Successfully", Toast.LENGTH_SHORT).show()
+
+            }
+
+            R.id.signOut->{
+                var intent= Intent(this,Login::class.java)
+                startActivity(intent)
+                Toast.makeText(this, "LogOut Success", Toast.LENGTH_SHORT).show()
+
 
             }
 

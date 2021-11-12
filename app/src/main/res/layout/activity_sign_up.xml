@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/___2"
+    android:background="@drawable/___3"
     tools:context=".SignUp">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="133dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="120dp"
-        android:fontFamily="@font/volkhov"
+        android:fontFamily="@font/alike_angular"
         android:text="Create Account"
         android:textColor="#FDFCFC"
         android:textSize="48sp"
@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="59dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="98dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:password="true"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,6 +96,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/alike_angular"
         android:text="Sign Up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +109,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/alike_angular"
         android:text="Already have an Account?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.384"
@@ -119,6 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/alike_angular"
         android:text="Login"
         android:textColor="#99A799"
         android:textStyle="bold"
