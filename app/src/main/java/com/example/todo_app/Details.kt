@@ -20,7 +20,7 @@ class Details : AppCompatActivity() {
         var task= intent.getSerializableExtra("task") as Task
 
 
-        note.text=task.descrption
+        note.text=task.descrption.capitalize()
         mToolbar.title=task.title.capitalize()
         due.text=task.dueDate
 

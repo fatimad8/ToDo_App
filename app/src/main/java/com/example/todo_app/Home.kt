@@ -48,7 +48,7 @@ class Home : AppCompatActivity() {
         var addButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
         var fname=findViewById<TextView>(R.id.textViewName)
-        var subName=findViewById<TextView>(R.id.textViewSubName)
+        //var subName=findViewById<TextView>(R.id.textViewSubName)
 
         var mToolbar = findViewById<Toolbar>(R.id.mToolbar1)
         mToolbar.title = "ToDo App"
@@ -162,7 +162,7 @@ class Home : AppCompatActivity() {
                 println("Hi $name")
                 fname.text="${name.capitalize()}"
                 var sub=name.substring(0,2)
-                subName.text=sub.toUpperCase()
+                //subName.text=sub.toUpperCase()
             }
 
 
